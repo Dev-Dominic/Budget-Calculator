@@ -1,2 +1,3 @@
 # Budget-Calculator
-Technical Practice for building a fullstack web applicaton for tracking a budget.
+
+Technical Practice for building a fullstack web application for tracking a budget.
