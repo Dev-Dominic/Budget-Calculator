@@ -10,7 +10,7 @@ def get_ip(request):
         request: resquest object
 
     Return:
-        ip_address: requesting machine's ip addresss (PUBLIC)
+        ip_address: requesting machine's ip address (PUBLIC)
 
     """
     ip_address = request.remote_addr
@@ -36,7 +36,7 @@ def insert_user(user_data, ip_address):
         - IP Address
         - At least one stream of income
 
-    The process of insertion also fails if extra user unneccsary field data is
+    The process of insertion also fails if extra user unnecessary field data is
     sent to within the json object(user_data).
 
     Args:
@@ -45,7 +45,7 @@ def insert_user(user_data, ip_address):
 
     Return:
         user_id: valid user_id or None
-        message: Message indicating whether inerstion was a success
+        message: Message indicating whether insertion was a success
         status_code: Relevant status code to indicate success or failure
 
     """
