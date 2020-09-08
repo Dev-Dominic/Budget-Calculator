@@ -31,13 +31,13 @@ def ip_exists(ip_address, client):
     exists = bool(user_collection.find_one({'ipAddress': ip_address}))
     return exists
 
-def __generate_report(user):
+def generate_report(user):
     """Generates required report for a given user
 
     Note:
-        expenses < (income + savings) - You have a good handle of your budget
-        expenses > (income + savings) - You need to cut back on your expenses
-        expenses = (income + savings) - You budget is very tight
+        expenses < (leftover + savings) - You have a good handle of your budget
+        expenses > (leftover + savings) - You need to cut back on your expenses
+        expenses = (leftover + savings) - Your budget is very tight
 
     Args:
         user: dictionary containing user data
@@ -76,7 +76,7 @@ def insert_user(user_data, ip_address, client):
         client: pymongo client used to connect to mongodb database
 
     Return:
-        user_id: valid user_id or None
+        user: valid user dictionary or None
         message: Message indicating whether insertion was a success
         status_code: Relevant status code to indicate success or failure
 
