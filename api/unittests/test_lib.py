@@ -110,7 +110,7 @@ class TestLibraryModules(unittest.TestCase):
         result = ip_exists('127.0.10.10', self.mongo_client)
         self.assertFalse(result)
 
-    def test___generate_report(self):
+    def test_generate_report(self):
         "Test generate_report"
 
         ########################################################################
@@ -130,7 +130,7 @@ class TestLibraryModules(unittest.TestCase):
         self.assertEqual(updated_user_one['leftover'], 105000)
         self.assertEqual(updated_user_one['statement'], 'You have a good handle of your budget')
 
-        # Checking that preivous fields reamined intact
+        # Checking that previous fields remained intact
         # Checking that both key and value match-up
         for key in user_one.keys():
             self.assertIn(key, updated_user_one)
@@ -141,7 +141,7 @@ class TestLibraryModules(unittest.TestCase):
         ########################################################################
 
         values = {'grocery': 10000, 'utilities': 100000, 'transportation':
-                  1000000, 'salary': 200000, 'equities': 0, 'pension':
+                  100000, 'salary': 200000, 'equities': 0, 'pension':
                   0,'emergency': 0}
         user_one = create_user_dict('Dineah', 'Cohen', values)
         updated_user_one = generate_report(user_one)
@@ -164,7 +164,7 @@ class TestLibraryModules(unittest.TestCase):
         ########################################################################
 
         values = {'grocery': 10000, 'utilities': 80000, 'transportation':
-                  1000000, 'salary': 200000, 'equities': 5000, 'pension':
+                  100000, 'salary': 200000, 'equities': 5000, 'pension':
                   5000,'emergency': 0}
         user_one = create_user_dict('Ladonna', 'Larmine', values)
         updated_user_one = generate_report(user_one)
@@ -188,7 +188,7 @@ class TestLibraryModules(unittest.TestCase):
 
         # Tests that a valid user is entered correctly
         values = {'grocery': 10000, 'utilities': 100000, 'transportation':
-                  1000000, 'salary': 200000, 'equities': 0, 'pension':
+                  100000, 'salary': 200000, 'equities': 0, 'pension':
                   0,'emergency': 0}
         ip_address = '191.0.10.10'
         user_one = create_user_dict('Gabrielle', 'Clarke', values)
@@ -220,7 +220,7 @@ class TestLibraryModules(unittest.TestCase):
 
         self.assertIsNone(updated_user_two)
         self.assertEqual('Failed', message)
-        self.assertEqual('400', status_code)
+        self.assertEqual(400, status_code)
 
     def test_all_users(self):
         """Test all_users"""
@@ -254,6 +254,8 @@ class TestLibraryModules(unittest.TestCase):
             'leftover': 0,
             'statement': 'Your budget is very tight'
         })
+
+        self.mongo_client.db.user.insert_many(users)
 
         expected = users + [self.user]
         result = all_users(self.mongo_client)
