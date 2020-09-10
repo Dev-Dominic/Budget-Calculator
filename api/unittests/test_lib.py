@@ -11,9 +11,6 @@ from mongomock import MongoClient
 # Flask Imports
 from flask import Flask
 
-# Unittest utilities
-from utils import create_user_dict
-
 # PYTHONPATH
 PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
@@ -23,6 +20,8 @@ sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 from api.lib import (get_ip, ip_exists, insert_user, all_users,
                        generate_report)
 
+# Unittest utilities
+from unittests.utils import create_user_dict
 
 class TestLibraryModules(unittest.TestCase):
     """Tests Each method stored in the lib.py module"""
