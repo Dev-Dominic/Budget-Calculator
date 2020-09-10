@@ -1,11 +1,11 @@
-from api import app
+from api import app, db_client
 
 @app.route('/create')
 def create():
     """Creates new user submission
 
     Args:
-        request: Each endpoint receies a http request body
+        request: Each endpoint receives a http request body
 
     Return:
         user:

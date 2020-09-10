@@ -8,10 +8,6 @@ class Config(object):
 
     SECRET_KEY = secrets.token_urlsafe(64)
 
-    DB_NAME = 'bdCalculator'
-    DB_USERNAME = 'bdUser'
-    DB_PASSWORD = 'bdPassword'
-
 class ProductionConfig(Config):
     """Production Flask API Configuration"""
     pass
