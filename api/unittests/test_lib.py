@@ -20,37 +20,8 @@ sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 from api.lib import (get_ip, ip_exists, insert_user, all_users,
                        generate_report)
 
-def create_user_dict(firstName, lastName, values):
-    """Creates a new user dictionary for testing
-
-    Args:
-        firstName
-        lastName
-
-    Return:
-        user: dictionary containing random user data
-
-    """
-    user_one = {
-        'firstName': firstName,
-        'lastName': lastName,
-        'expense': {
-            'grocery': values['grocery'],
-            'utilities': values['utilities'],
-            'transportation': values['transportation']
-        },
-        'income': {
-            'salary': values['salary']
-        },
-        'savings': {
-            'equities': values['equities'],
-            'pension': values['pension'],
-            'emergency': values['emergency']
-        }
-    }
-
-    return user_one
-
+# Unittest utilities
+from utils import create_user_dict
 
 class TestLibraryModules(unittest.TestCase):
     """Tests Each method stored in the lib.py module"""
