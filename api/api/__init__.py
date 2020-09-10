@@ -15,4 +15,4 @@ elif app.config['ENV'] == 'testing':
 else:
     app.config.from_object('config.DevelopmentConfig')
 
-from . import endpoints
+from api import endpoints

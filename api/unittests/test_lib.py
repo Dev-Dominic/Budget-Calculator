@@ -7,7 +7,6 @@ import random
 
 # Third-party modules
 from mongomock import MongoClient
-from bson.objectid import ObjectId
 
 # Flask Imports
 from flask import Flask
@@ -55,16 +54,6 @@ def create_user_dict(firstName, lastName, values):
 
 class TestLibraryModules(unittest.TestCase):
     """Tests Each method stored in the lib.py module"""
-
-    @classmethod
-    def setUpClass(self):
-        """Test class setup"""
-
-        # Need a new app to test various functionality surrounding processing
-        # request objects
-        self.app = Flask(__name__)
-        self.client = self.app.test_client()
-        self.client.testing = True
 
     def setUp(self):
         """Test setup upon each run"""
