@@ -16,7 +16,7 @@ sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 
 # API Imports
 from api import app, client
-from test_lib import create_user_dict
+from unittest.test_lib import create_user_dict
 
 
 class TestEndpoints(unittest.TestCase):
