@@ -253,6 +253,10 @@ class TestLibraryModules(unittest.TestCase):
         for entry in expected:
             self.assertIn(entry, result)
 
+    def test_create_mongo_client(self):
+        """Test create_mongo_client"""
+        pass
+
 
 if __name__ == "__main__":
     unittest.main()

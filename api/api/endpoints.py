@@ -1,4 +1,4 @@
-from api import app, db_client
+from api import app
 
 @app.route('/create')
 def create():

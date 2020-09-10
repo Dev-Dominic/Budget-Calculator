@@ -1,3 +1,3 @@
-FLASK_ENV=development
+FLASK_ENV=testing
 FLASK_APP=api
 FLASK_RUN_PORT=8080

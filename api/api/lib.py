@@ -4,6 +4,10 @@
 import functools
 import json
 
+# PyPI imports
+import mongomock
+import pymongo
+
 # TODO verify that request passes valid ip address
 def get_ip(request):
     """Determines user IP address
@@ -155,3 +159,21 @@ def all_users(client):
     for user in client.db.user.find():
         users.append(user)
     return users
+
+def create_mongo_client(mongo_uri, testing=False):
+    """Create a new MongoClient instance
+
+    Args:
+        testing: create test environment database
+
+    Return:
+        client: MongoClient instance
+
+    """
+    client = None
+    if testing:
+        client = mongomock.MongoClient()
+        print('here')
+    else:
+        client = pymongo.MongoClient(mongo_uri)
+    return client

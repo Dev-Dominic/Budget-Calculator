@@ -1,12 +1,14 @@
 # Python Imports
 import secrets
 
+
 class Config(object):
-    """Based Flask API Configuration"""
+    """Base Flask API Configuration"""
     DEBUG = False
     TESTING = False
 
     SECRET_KEY = secrets.token_urlsafe(64)
+
 
 class ProductionConfig(Config):
     """Production Flask API Configuration"""
@@ -15,6 +17,7 @@ class ProductionConfig(Config):
 class DevelopmentConfig(Config):
     """Development Flask API Configuration"""
     DEBUG = True
+
 
 class TestingConfig(Config):
     """Testing Flask API Configuration"""
