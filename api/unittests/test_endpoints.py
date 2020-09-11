@@ -120,7 +120,7 @@ class TestEndpoints(unittest.TestCase):
             'totalIncome': 200000,
             'leftover': -10000,
             'statement': 'You need to cut back on your expenses',
-            'ipAddress': ipAddress
+            'ipAddress': self.ipAddress
         })
 
         users[1].update({
@@ -129,7 +129,7 @@ class TestEndpoints(unittest.TestCase):
             'totalIncome': 200000,
             'leftover': 0,
             'statement': 'Your budget is very tight',
-            'ipAddress': ipAddress
+            'ipAddress': self.ipAddress
         })
 
         client.db.user.insert_many(users)
