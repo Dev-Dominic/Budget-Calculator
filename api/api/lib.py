@@ -101,46 +101,46 @@ def insert_user(user_data, ip_address, client):
         client: pymongo client used to connect to mongodb database
 
     Return:
-        user: valid user dictionary or None
+        user: valid user dictionary or {}
         message: Message indicating whether insertion was a success
         status_code: Relevant status code to indicate success or failure
 
     """
-    user, message, status_code = None, 'Failed', 400
+    user, message, status_code = {}, 'Failed', 400
 
-    # Checking that user_data has all required entries
-    required = ['firstName', 'lastName', 'income']
-    optional = ['expense', 'savings']
+    # Checks that ip_address doesn't exist
+    if not ip_exists(ip_address, client):
+        # Checking that user_data has all required entries
+        required = ['firstName', 'lastName', 'income']
+        optional = ['expense', 'savings']
 
-    # Counts that required entries are present in `user_data`
-    # This will work because dictionaries cannot have duplicate keys
-    # Thus required_count can only be capped at the lengths of required list
-    required_count = 0
-    valid_user = True
+        # Counts that required entries are present in `user_data`
+        # This will work because dictionaries cannot have duplicate keys
+        # Thus required_count can only be capped at the lengths of required list
+        required_count = 0
+        valid_user = True
 
-    # Converting user_data to dictionary
-    user_data = json.loads(user_data)
+        for entry in user_data.keys():
+            if entry in required:
+                required_count += 1
+                continue
+            elif entry in optional:
+                continue
+            else:
+                valid_user = False
+                break
 
-    for entry in user_data.keys():
-        if entry in required:
-            required_count += 1
-            continue
-        elif entry in optional:
-            continue
-        else:
-            break
+        if (required_count == len(required)) and valid_user:
+            user_data = generate_report(user_data)
+            user_data['ipAddress'] = ip_address
 
-    if (required_count == len(required)) and valid_user:
-        user = generate_report(user_data)
-        user['ipAddress'] = ip_address
+            # Inserting new user
+            _id = client.db.user.insert_one(user_data).inserted_id
 
-        # Inserting new user
-        _id = client.db.user.insert_one(user).inserted_id
-
-        # Proper ObjectId would indicate a truthy value and a successfully
-        # intserted user
-        if bool(_id):
-            message, status_code = 'Success', 200
+            # Proper ObjectId would indicate a truthy value and a successfully
+            # intserted user
+            if bool(_id):
+                user, message, status_code = user_data, 'Success', 200
 
     return user, message, status_code
 
@@ -173,7 +173,6 @@ def create_mongo_client(mongo_uri, testing=False):
     client = None
     if testing:
         client = mongomock.MongoClient()
-        print('here')
     else:
         client = pymongo.MongoClient(mongo_uri)
     return client

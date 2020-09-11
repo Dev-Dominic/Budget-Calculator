@@ -1,6 +1,11 @@
-from api import app
+# API Imports
+from api import app, client
+from api.lib import get_ip, insert_user, all_users
 
-@app.route('/create')
+# Flask Imports
+from flask import jsonify, request
+
+@app.route('/create', methods=['POST'])
 def create():
     """Creates new user submission
 
@@ -18,19 +23,45 @@ def create():
             - Valid: 200
             - Invalid: 400
 
+        {
+            message: 'Success',
+            user: {
+                'firstName': 'Dominic',
+                'lastName': 'Henry',
+                ...
+            }
+        }
+
     """
-    return 'create'
+    ip_address = get_ip(request)
+    user_data = request.get_json()
+    user, message, status_code = insert_user(user_data, ip_address, client)
+
+    # Converts ObjectId of user to string, because ObjectId instance isn't JSON
+    # serializable
+    if not user == {}:
+        user['_id'] = str(user['_id'])
+
+    return jsonify(message=message, user=user), status_code
 
 @app.route('/all-users')
-def all_users():
+def get_users():
     """Retrieves all users submissions
 
     Args:
         request: each endpoint receives a http request body
 
     Return:
-        users: returns list of user submissions
+        users: returns list of user submissions, returns empty list otherwise
         status_code: 200
 
     """
-    return 'all-users'
+    users = all_users(client)
+
+    # Convering each user's '_id' ObjectId instance to a string, because it's
+    # not JSON serializable
+    for user in users:
+        user['_id'] = str(user['_id'])
+
+    status_code = 200
+    return jsonify(users=users), status_code
