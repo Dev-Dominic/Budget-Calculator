@@ -18,12 +18,12 @@ client = None
 if app.config['ENV'] == 'production':
     app.config.from_object('config.ProductionConfig')
     client = create_mongo_client(os.getenv('MONGO_URI_PRODUCTION'))
-elif app.config['ENV'] == 'testing':
-    app.config.from_object('config.TestingConfig')
-    client = create_mongo_client('', testing=True)
-else:
+elif app.config['ENV'] == 'development':
     app.config.from_object('config.DevelopmentConfig')
     client = create_mongo_client(os.getenv('MONGO_URI_DEVELOPMENT'))
+else:
+    app.config.from_object('config.TestingConfig')
+    client = create_mongo_client('', testing=True)
 
 if bool(client) is False:
     raise Exception('MongoDB Client not setup')
