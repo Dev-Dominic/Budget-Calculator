@@ -2,7 +2,6 @@
 import unittest
 import os
 import sys
-import json
 import random
 
 # Third-party modules
@@ -152,8 +151,7 @@ class TestLibraryModules(unittest.TestCase):
                   0,'emergency': 0}
         ip_address = '191.0.10.10'
         user_one = create_user_dict('Gabrielle', 'Clarke', values)
-        updated_user_one, message, status_code = insert_user(json.dumps(user_one),
-                                                    ip_address,
+        updated_user_one, message, status_code = insert_user(user_one, ip_address,
                                                     self.mongo_client)
 
         # Checking if these fields were added to existing dictionary
@@ -176,9 +174,9 @@ class TestLibraryModules(unittest.TestCase):
 
         # Test that a invalid user is not entered
         user_two = {}
-        updated_user_two, message, status_code = insert_user(json.dumps(user_two),'193.0.10.10', self.mongo_client)
+        updated_user_two, message, status_code = insert_user(user_two,'193.0.10.10', self.mongo_client)
 
-        self.assertIsNone(updated_user_two)
+        self.assertEqual({}, updated_user_two)
         self.assertEqual('Failed', message)
         self.assertEqual(400, status_code)
 
@@ -204,7 +202,8 @@ class TestLibraryModules(unittest.TestCase):
             'totalSavings': 0,
             'totalIncome': 200000,
             'leftover': -10000,
-            'statement': 'You need to cut back on your expenses'
+            'statement': 'You need to cut back on your expenses',
+            'ipAddress': '190.1.0.20'
         })
 
         users[1].update({
@@ -212,7 +211,8 @@ class TestLibraryModules(unittest.TestCase):
             'totalSavings': 10000,
             'totalIncome': 200000,
             'leftover': 0,
-            'statement': 'Your budget is very tight'
+            'statement': 'Your budget is very tight',
+            'ipAddress': '190.1.0.21'
         })
 
         self.mongo_client.db.user.insert_many(users)
