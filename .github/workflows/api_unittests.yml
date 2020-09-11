@@ -26,4 +26,4 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f api/requirements.txt ]; then pip install -r api/requirements.txt; fi
       - name: Run all tests
-        run: python -m unittest discover api
+        run: python -m unittest discover api -v
