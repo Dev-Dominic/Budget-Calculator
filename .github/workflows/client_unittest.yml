@@ -3,6 +3,10 @@ name: Testing React client Application
 on:
   push:
     branches: [ master, development ]
+    
+defaults:
+  run:
+    working-directory: client
 
 jobs:
   build:
@@ -19,8 +23,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Installing dependencies
-        run: cd client && npm install
+        run: npm install
 
       - name: Test React App
-        run: cd client && npm test
+        run: npm test
  
