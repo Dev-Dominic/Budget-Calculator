@@ -8,6 +8,9 @@ import json
 import mongomock
 import pymongo
 
+# API Imports
+from constants import required, optional
+
 # TODO verify that request passes valid ip address
 def get_ip(request):
     """Determines user IP address
