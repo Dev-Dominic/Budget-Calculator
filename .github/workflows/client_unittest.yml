@@ -4,6 +4,10 @@ on:
   push:
     branches: [ master, development ]
 
+defaults:
+  run:
+    working-directory: client
+
 jobs:
   build:
 
@@ -14,5 +18,5 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '14'
-    - run: cd client && npm install
-    - run: cd client && npm test
+    - run: npm install
+    - run: npm test
