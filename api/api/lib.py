@@ -111,8 +111,6 @@ def insert_user(user_data, ip_address, client):
     # Checks that ip_address doesn't exist
     if not ip_exists(ip_address, client):
         # Checking that user_data has all required entries
-        required = ['firstName', 'lastName', 'income']
-        optional = ['expense', 'savings']
 
         # Counts that required entries are present in `user_data`
         # This will work because dictionaries cannot have duplicate keys
