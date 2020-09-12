@@ -13,12 +13,12 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
       with:
-        node-version: '14'
-        
+        node-version: '14.x'
+
     - name: Install dependencies
       working-directory: client
       run: npm install
-      
-    - name: Run React Unittests
+    
+    - name: Run all tests
       working-directory: client
       run: npm test
