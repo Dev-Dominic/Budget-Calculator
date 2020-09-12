@@ -2,7 +2,7 @@
 import React from "react";
 
 /* Computer Imports */
-import Entry from "./components/entry";
+import Entry from "./components/entry/entry";
 
 function EntryList({ entries, onDelete }) {
   return (

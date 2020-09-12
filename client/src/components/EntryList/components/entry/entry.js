@@ -14,8 +14,8 @@ function Entry({ desc, amount, onDelete }) {
   const amount_format = `$${amount.toLocaleString()}`;
   return (
     <div className="">
-      <div data-testid="desc">{desc}</div>
-      <div data-testid="amount">{amount_format}</div>
+      <div data-testid={desc}>{desc}</div>
+      <div data-testid={amount}>{amount_format}</div>
       <Delete onDelete={onDelete} />
     </div>
   );

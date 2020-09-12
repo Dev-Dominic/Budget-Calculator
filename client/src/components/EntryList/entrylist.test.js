@@ -4,7 +4,6 @@ import { render, screen } from "@testing-library/react";
 
 /* Component Import */
 import EntryList from "./entrylist";
-import Entry from "./components/entry";
 import { entries } from "./constants";
 
 describe("<EntryList />", () => {
@@ -14,9 +13,11 @@ describe("<EntryList />", () => {
     render(<EntryList entries={entries} onDelete={() => {}} />);
 
     entries.forEach((entry) => {
-      const { desc, amount, expected_amount } = entry;
+      const { desc, amount, expectedAmount } = entry;
       expect(screen.getByTestId(desc).textContent).toBe(desc);
-      expect(screen.getByTestId(amount).textContent).toBe(expected_amount);
+      expect(screen.getByTestId(amount.toString()).textContent).toBe(
+        expectedAmount
+      );
     });
   });
 });
