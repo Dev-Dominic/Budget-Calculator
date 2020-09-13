@@ -5,7 +5,7 @@ from api.lib import get_ip, insert_user, all_users
 # Flask Imports
 from flask import jsonify, request
 
-@app.route('/create', methods=['POST'])
+@app.route('/api/create', methods=['POST'])
 def create():
     """Creates new user submission
 
@@ -44,7 +44,7 @@ def create():
 
     return jsonify(message=message, user=user), status_code
 
-@app.route('/all-users')
+@app.route('/api/all-users')
 def get_users():
     """Retrieves all users submissions
 
@@ -58,7 +58,7 @@ def get_users():
     """
     users = all_users(client)
 
-    # Convering each user's '_id' ObjectId instance to a string, because it's
+    # Converting each user's '_id' ObjectId instance to a string, because it's
     # not JSON serializable
     for user in users:
         user['_id'] = str(user['_id'])
