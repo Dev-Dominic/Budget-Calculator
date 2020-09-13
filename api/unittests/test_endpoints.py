@@ -56,7 +56,7 @@ class TestEndpoints(unittest.TestCase):
 
         # Making request to 'create' endpoint
         response = None
-        response = self.app.post('/create', environ_base=self.environ_base,
+        response = self.app.post('/api/create', environ_base=self.environ_base,
                                  headers=self.headers, data=valid_payload)
 
         expected_user.update({
@@ -86,7 +86,7 @@ class TestEndpoints(unittest.TestCase):
         ########################################################################
 
         invalid_payload = json.dumps({})
-        response = self.app.post('/create', environ_base=self.environ_base,
+        response = self.app.post('/api/create', environ_base=self.environ_base,
                                  headers=self.headers, data=invalid_payload)
 
         expected_message = 'Failed'
@@ -133,7 +133,7 @@ class TestEndpoints(unittest.TestCase):
         })
 
         client.db.user.insert_many(users)
-        response = self.app.get('/all-users', environ_base=self.environ_base,
+        response = self.app.get('/api/all-users', environ_base=self.environ_base,
                                 headers=self.headers)
 
         # Changing ObjectId for expected users to a string

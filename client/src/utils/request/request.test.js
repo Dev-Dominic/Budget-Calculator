@@ -136,7 +136,7 @@ describe("allUsers", () => {
   };
 
   test("Testing retrieving a list of all users", () => {
-    response = {
+    const response = {
       data: {
         users: [
           {
@@ -184,7 +184,7 @@ describe("allUsers", () => {
     allUsersTest(response);
   });
   test("Testing handling empty user object", () => {
-    response = {
+    const response = {
       data: {
         users: [],
       },
