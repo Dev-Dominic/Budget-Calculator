@@ -2,7 +2,8 @@
 import React from "react";
 
 // Component Imports
-//import { Tabs } from "../Tabs";
+import { Tabs } from "../Tabs";
+import { EntryList } from "../EntryList/entrylist";
 
 // Assets Imports
 import "./app.css";
