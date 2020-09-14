@@ -19,9 +19,6 @@ def create():
         message:
             - Valid: Success
             - Invalid: Failed
-        status_code:
-            - Valid: 200
-            - Invalid: 400
 
         {
             message: 'Success',
@@ -42,7 +39,7 @@ def create():
     if not user == {}:
         user['_id'] = str(user['_id'])
 
-    return jsonify(message=message, user=user), status_code
+    return jsonify(message=message, user=user)
 
 @app.route('/api/all-users')
 def get_users():
@@ -53,7 +50,6 @@ def get_users():
 
     Return:
         users: returns list of user submissions, returns empty list otherwise
-        status_code: 200
 
     """
     users = all_users(client)
@@ -63,5 +59,4 @@ def get_users():
     for user in users:
         user['_id'] = str(user['_id'])
 
-    status_code = 200
-    return jsonify(users=users), status_code
+    return jsonify(users=users)

@@ -16,11 +16,11 @@ describe("create", () => {
   });
 
   // Base testing function for create function
-  const createTest = (user, response, status) => {
-    mock.onPost("/api/create").reply(status, response);
+  const createTest = (user, response) => {
+    mock.onPost("/api/create").reply(200, response);
 
     // Needed because the response passed from 'create' would not come until
-    // after all synchrounous code is ran.
+    // after all synchronous code is ran.
     const testResponse = ({ user, message }) => {
       expect(user).toEqual(response.user);
       expect(message).toEqual(response.message);
@@ -61,7 +61,7 @@ describe("create", () => {
       message: "Success",
     };
 
-    createTest(user, response, 200);
+    createTest(user, response);
   });
 
   test("Testing invalid user creation", () => {
@@ -71,7 +71,7 @@ describe("create", () => {
       message: "Failed",
     };
 
-    createTest(user, response, 400);
+    createTest(user, response);
   });
 
   test("Testing when user submission made by existing ipAddress", () => {
@@ -91,7 +91,7 @@ describe("create", () => {
       message: "Failed",
     };
 
-    createTest(user, response, 400);
+    createTest(user, response);
   });
 });
 
@@ -102,11 +102,16 @@ describe("allUsers", () => {
   });
 
   // Base testing function for create function
-  const allUsersTest = (response, status) => {
-    mock.onGet("/api/create").reply(status, response);
-    const users = allUsers();
+  const allUsersTest = (response) => {
+    mock.onGet("/api/all-users").reply(200, response);
 
-    expect(response.data.users).toEqual(users);
+    // Needed because the response passed from 'all-users' would not come until
+    // after all synchronous code is ran.
+    const testResponse = (users) => {
+      expect(users).toEqual(response.users);
+    };
+
+    allUsers().then(testResponse).catch(testResponse);
   };
 
   test("Testing retrieving a list of all users", () => {
@@ -153,7 +158,7 @@ describe("allUsers", () => {
       ],
     };
 
-    allUsersTest(response, 200);
+    allUsersTest(response);
   });
 
   test("Testing handling empty user object", () => {
@@ -161,6 +166,6 @@ describe("allUsers", () => {
       users: [],
     };
 
-    allUsersTest(response, 200);
+    allUsersTest(response);
   });
 });

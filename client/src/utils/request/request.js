@@ -10,7 +10,9 @@ async function create(params) {
 }
 
 async function allUsers() {
-  return;
+  const result = await axios.get("/api/all-users");
+  const { users } = result.data;
+  return users;
 }
 
 export { create, allUsers };
