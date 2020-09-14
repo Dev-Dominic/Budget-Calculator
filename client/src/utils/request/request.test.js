@@ -1,38 +1,32 @@
 /* Testing HTTP request methods */
 
 /* MockAxios */
-import mockAxios from "jest-mock-axios";
+import axios from "axios";
+import MockAdapter from "axios-mock-adapter";
 
 /* Request Methods Import */
 import { create, allUsers } from "./request";
 
+const mock = new MockAdapter(axios);
+
 describe("create", () => {
   // Clean up after each test
   afterEach(() => {
-    mockAxios.reset();
+    mock.reset();
   });
 
   // Base testing function for create function
-  const createTest = (user, response, err = false) => {
-    const [thenFn, catchFn] = [jest.fn(), jest.fn()];
+  const createTest = (user, response, status) => {
+    mock.onPost("/api/create").reply(status, response);
 
-    // Making request to create new user submission with 'create'
-    create(user).then(thenFn).catch(catchFn);
+    // Needed because the response passed from 'create' would not come until
+    // after all synchrounous code is ran.
+    const testResponse = ({ user, message }) => {
+      expect(user).toEqual(response.user);
+      expect(message).toEqual(response.message);
+    };
 
-    // Testing parameters for axios http request
-    expect(mockAxios.post).toHaveBeenCalledWith("/api/create", user);
-
-    // Testing proper response
-    mockAxios.mockResponse(response);
-
-    // Testing when request gives an error or not
-    if (err === true) {
-      expect(thenFn).not.toHaveBeenCalled();
-      expect(catchFn).toHaveBeenCalledWith(response);
-    } else {
-      expect(thenFn).toHaveBeenCalledWith(response);
-      expect(catchFn).not.toHaveBeenCalled();
-    }
+    create(user).then(testResponse).catch(testResponse);
   };
 
   test("Testing valid user creation", () => {
@@ -55,35 +49,29 @@ describe("create", () => {
     };
 
     const response = {
-      data: {
-        user: {
-          ...user,
-          _id: "507f191e810c19729de860ea",
-          totalIncome: 240000,
-          totalSavings: 85000,
-          totalExpenses: 25000,
-          statement: "You have a good handle of your budget",
-          leftover: 130000,
-        },
-        message: "Success",
+      user: {
+        ...user,
+        _id: "507f191e810c19729de860ea",
+        totalIncome: 240000,
+        totalSavings: 85000,
+        totalExpenses: 25000,
+        statement: "You have a good handle of your budget",
+        leftover: 130000,
       },
-      status: 200,
+      message: "Success",
     };
 
-    createTest(user, response);
+    createTest(user, response, 200);
   });
 
   test("Testing invalid user creation", () => {
     const user = {};
     const response = {
-      data: {
-        user: {},
-        message: "Failed",
-      },
-      status: 400,
+      user: {},
+      message: "Failed",
     };
 
-    create(user, response, true);
+    createTest(user, response, 400);
   });
 
   test("Testing when user submission made by existing ipAddress", () => {
@@ -97,100 +85,82 @@ describe("create", () => {
         salary: 240000,
       },
     };
+
     const response = {
-      data: {
-        user: {},
-        message: "Failed",
-      },
-      status: 400,
+      user: {},
+      message: "Failed",
     };
 
-    create(user, response, true);
+    createTest(user, response, 400);
   });
 });
 
 describe("allUsers", () => {
   // Clean up after each test
   afterEach(() => {
-    mockAxios.reset();
+    mock.reset();
   });
 
   // Base testing function for create function
-  const allUsersTest = (response, err = false) => {
-    const [thenFn, catchFn] = [jest.fn(), jest.fn()];
+  const allUsersTest = (response, status) => {
+    mock.onGet("/api/create").reply(status, response);
+    const users = allUsers();
 
-    // Making request to create new user submission with 'create'
-    allUsers().then(thenFn).catch(catchFn);
-
-    // Testing parameters for axios http request
-    expect(mockAxios.get).toHaveBeenCalledWith("/api/all-users");
-
-    // Testing when request gives an error or not
-    if (err === true) {
-      expect(thenFn).not.toHaveBeenCalled();
-      expect(catchFn).toHaveBeenCalledWith(response);
-    } else {
-      expect(thenFn).toHaveBeenCalledWith(response);
-      expect(catchFn).not.toHaveBeenCalled();
-    }
+    expect(response.data.users).toEqual(users);
   };
 
   test("Testing retrieving a list of all users", () => {
     const response = {
-      data: {
-        users: [
-          {
-            firstName: "Gabrielle",
-            lastName: "Clarke",
-            expense: {
-              grocery: 10000,
-            },
-            income: {
-              salary: 10000,
-            },
-            _id: "604f191e810c19729de860ea",
-            totalIncome: 240000,
-            totalExpenses: 25000,
-            statement: "Your budget is very tight",
-            leftover: 0,
+      users: [
+        {
+          firstName: "Gabrielle",
+          lastName: "Clarke",
+          expense: {
+            grocery: 10000,
           },
-          {
-            firstName: "Dominic",
-            lastName: "Henry",
-            expense: {
-              grocery: 10000,
-              utilities: 10000,
-              transportation: 5000,
-            },
-            income: {
-              salary: 240000,
-            },
-            savings: {
-              equities: 15000,
-              pension: 20000,
-              emergency: 50000,
-            },
-            _id: "507f191e810c19729de860ea",
-            totalIncome: 240000,
-            totalSavings: 85000,
-            totalExpenses: 25000,
-            statement: "You have a good handle of your budget",
-            leftover: 130000,
+          income: {
+            salary: 10000,
           },
-        ],
-      },
+          _id: "604f191e810c19729de860ea",
+          totalIncome: 240000,
+          totalExpenses: 25000,
+          statement: "Your budget is very tight",
+          leftover: 0,
+        },
+        {
+          firstName: "Dominic",
+          lastName: "Henry",
+          expense: {
+            grocery: 10000,
+            utilities: 10000,
+            transportation: 5000,
+          },
+          income: {
+            salary: 240000,
+          },
+          savings: {
+            equities: 15000,
+            pension: 20000,
+            emergency: 50000,
+          },
+          _id: "507f191e810c19729de860ea",
+          totalIncome: 240000,
+          totalSavings: 85000,
+          totalExpenses: 25000,
+          statement: "You have a good handle of your budget",
+          leftover: 130000,
+        },
+      ],
     };
 
-    allUsersTest(response);
+    allUsersTest(response, 200);
   });
+
   test("Testing handling empty user object", () => {
     const response = {
-      data: {
-        users: [],
-      },
-      status: 200,
+      users: [],
     };
 
-    allUsersTest(response);
+    allUsersTest(response, 200);
   });
 });
