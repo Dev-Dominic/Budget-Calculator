@@ -95,7 +95,7 @@ class TestEndpoints(unittest.TestCase):
 
         self.assertEqual({}, response_user)
         self.assertEqual(expected_message, response_message)
-        self.assertEqual(400, response.status_code)
+        self.assertEqual(200, response.status_code)
 
     def test_all_users(self):
         """Test all_users endpoints"""
