@@ -5,14 +5,14 @@ import React, { useState } from "react";
 import { Tabs } from "../Tabs";
 import { EntryList } from "../EntryList/entrylist";
 
-// Utilies Import
-import { allUsers } from "../../utils/request/request";
+// Utilities Import
+import { allUsers } from "../../utils/request";
+import { userCreate, categories } from "../../utils/userCreate";
 
 // Assets Imports
 import "./app.css";
 
 function App() {
-  const [tab, setTab] = useState("income");
   return (
     <div className="App">
       <h1>Budget Calculator</h1>
