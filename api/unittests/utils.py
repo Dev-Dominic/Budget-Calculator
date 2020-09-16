@@ -11,7 +11,7 @@ def create_user_dict(firstName, lastName, values):
         user: dictionary containing random user data
 
     """
-    user_one = {
+    user = {
         'firstName': firstName,
         'lastName': lastName,
         'expense': {
@@ -29,4 +29,4 @@ def create_user_dict(firstName, lastName, values):
         }
     }
 
-    return user_one
+    return user

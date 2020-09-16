@@ -47,7 +47,7 @@ class TestLibraryModules(unittest.TestCase):
         # Instantiate MongoClient
         # Inserting new user instance into mock mongodb database
         self.mongo_client = MongoClient()
-        self.user_collection = self.mongo_client.db.user
+        self.user_collection = self.mongo_client.bdCalculator.user
 
         self.user_collection.insert_one(self.user)
 
@@ -215,7 +215,7 @@ class TestLibraryModules(unittest.TestCase):
             'ipAddress': '190.1.0.21'
         })
 
-        self.mongo_client.db.user.insert_many(users)
+        self.mongo_client.bdCalculator.user.insert_many(users)
 
         expected = users + [self.user]
         result = all_users(self.mongo_client)

@@ -38,7 +38,7 @@ class TestEndpoints(unittest.TestCase):
     def tearDown(self):
         """Teardowns mongodb user database each test"""
 
-        client.db.user.drop()
+        client.bdCalculator.user.drop()
 
     def test_create(self):
         """Test create endpoints"""
@@ -132,7 +132,7 @@ class TestEndpoints(unittest.TestCase):
             'ipAddress': self.ipAddress
         })
 
-        client.db.user.insert_many(users)
+        client.bdCalculator.user.insert_many(users)
         response = self.app.get('/api/all-users', environ_base=self.environ_base,
                                 headers=self.headers)
 
