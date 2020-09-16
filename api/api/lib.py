@@ -42,7 +42,7 @@ def ip_exists(ip_address, client):
         exists: boolean indicating whether an IP address exists in database
 
     """
-    user_collection = client.db.user
+    user_collection = client.bdCalculator.user
     exists = bool(user_collection.find_one({'ipAddress': ip_address}))
     return exists
 
@@ -142,7 +142,7 @@ def insert_user(user_data, ip_address, client):
             user_data['ipAddress'] = ip_address
 
             # Inserting new user
-            _id = client.db.user.insert_one(user_data).inserted_id
+            _id = client.bdCalculator.user.insert_one(user_data).inserted_id
 
             # Proper ObjectId would indicate a truthy value and a successfully
             # intserted user
@@ -163,7 +163,7 @@ def all_users(client):
 
     """
     users = []
-    for user in client.db.user.find():
+    for user in client.bdCalculator.user.find():
         users.append(user)
     return users
 
