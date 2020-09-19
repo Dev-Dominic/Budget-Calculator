@@ -5,7 +5,6 @@
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
     "axios": "^0.20.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -36,6 +35,8 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/dom": "^7.24.2",
+    "@testing-library/user-event": "^7.2.1",
     "axios-mock-adapter": "^1.18.2",
     "eslint-config-fbjs": "^3.1.1"
   },
