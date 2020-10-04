@@ -12,10 +12,10 @@ describe("<EntryList />", () => {
   test("Tests that all entries are rendered", () => {
     render(<EntryList entries={entries} onDelete={() => {}} />);
 
-    entries.forEach((entry) => {
+    entries.forEach((entry, i) => {
       const { desc, amount, expectedAmount } = entry;
-      expect(screen.getByTestId(desc).textContent).toBe(desc);
-      expect(screen.getByTestId(amount.toString()).textContent).toBe(
+      expect(screen.getByTestId(`${desc}-${i}`).textContent).toBe(desc);
+      expect(screen.getByTestId(`${amount}-${i}`).textContent).toBe(
         expectedAmount
       );
     });

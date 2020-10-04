@@ -9,13 +9,14 @@ function Delete({ onDelete }) {
   );
 }
 
-function Entry({ desc, amount, onDelete }) {
+function Entry({ desc, amount, onDelete, index }) {
   // Changing format of amount, E.g 40000 => $40,000
   const amount_format = `$${amount.toLocaleString()}`;
+  const indexString = index.toString();
   return (
     <div className="">
-      <div data-testid={desc}>{desc}</div>
-      <div data-testid={amount}>{amount_format}</div>
+      <div data-testid={`${desc}-${indexString}`}>{desc}</div>
+      <div data-testid={`${amount}-${indexString}`}>{amount_format}</div>
       <Delete onDelete={onDelete} />
     </div>
   );
